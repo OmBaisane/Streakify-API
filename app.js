@@ -4,7 +4,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const app = express();
+
 const userRoutes = require("./routes/userRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 app.use(express.json());
 
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", userRoutes);
+app.use("/api", taskRoutes);
 
 app.listen(3000, () => {
   console.log("Server running...");
