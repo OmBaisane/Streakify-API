@@ -23,7 +23,8 @@ exports.register = async (req, res) => {
 
     res.status(201).json({ message: "User registered" });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.log(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -49,7 +50,8 @@ exports.login = async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.log(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -72,6 +74,7 @@ exports.getProfile = async (req, res) => {
       completedTasks,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Error fetching profile" });
   }
 };

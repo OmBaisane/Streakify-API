@@ -5,6 +5,10 @@ exports.createTask = async (req, res) => {
   try {
     const { title } = req.body;
 
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
     const task = new Task({
       title,
       user: req.userId,
@@ -17,7 +21,8 @@ exports.createTask = async (req, res) => {
       task,
     });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.log(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -29,7 +34,8 @@ exports.getTasks = async (req, res) => {
 
     res.json(tasks);
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.log(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -76,7 +82,8 @@ exports.updateTask = async (req, res) => {
 
     res.json(task);
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.log(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -93,6 +100,7 @@ exports.deleteTask = async (req, res) => {
 
     res.json({ message: "Task deleted" });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    console.log(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
