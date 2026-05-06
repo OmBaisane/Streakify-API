@@ -1,4 +1,6 @@
 const User = require("../models/userModel");
+const Task = require("../models/taskModel");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -21,7 +23,7 @@ exports.register = async (req, res) => {
 
     res.status(201).json({ message: "User registered" });
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -47,6 +49,29 @@ exports.login = async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+
+    const totalTasks = await Task.countDocuments({
+      user: req.userId,
+    });
+
+    const completedTasks = await Task.countDocuments({
+      user: req.userId,
+      completed: true,
+    });
+
+    res.json({
+      user,
+      totalTasks,
+      completedTasks,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching profile" });
   }
 };

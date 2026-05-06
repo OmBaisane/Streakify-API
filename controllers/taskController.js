@@ -17,7 +17,7 @@ exports.createTask = async (req, res) => {
       task,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -29,7 +29,7 @@ exports.getTasks = async (req, res) => {
 
     res.json(tasks);
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -76,7 +76,7 @@ exports.updateTask = async (req, res) => {
 
     res.json(task);
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -93,6 +93,6 @@ exports.deleteTask = async (req, res) => {
 
     res.json({ message: "Task deleted" });
   } catch (err) {
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
