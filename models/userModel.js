@@ -4,6 +4,12 @@ const userSchema = new mongoose.Schema(
   {
     name: String,
     password: String,
+
+    streak: {
+      type: Number,
+      default: 0,
+    },
+    lastCompletedDate: Date,
   },
   { timestamps: true },
 );

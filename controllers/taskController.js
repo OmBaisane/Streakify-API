@@ -1,4 +1,5 @@
 const Task = require("../models/taskModel");
+const User = require("../models/userModel");
 
 exports.createTask = async (req, res) => {
   try {
@@ -45,6 +46,32 @@ exports.updateTask = async (req, res) => {
 
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
+    }
+
+    if (req.body.completed === true) {
+      const user = await User.findById(req.userId);
+
+      const today = new Date();
+      const last = user.lastCompletedDate;
+
+      const isSameDay = last && today.toDateString() === last.toDateString();
+
+      const isYesterday =
+        last && new Date(today - last) / (1000 * 60 * 60 * 24) === 1;
+
+      if (!last) {
+        user.streak = 1;
+      } else if (isSameDay) {
+        // do nothing
+      } else if (isYesterday) {
+        user.streak += 1;
+      } else {
+        user.streak = 1;
+      }
+
+      user.lastCompletedDate = today;
+
+      await user.save();
     }
 
     res.json(task);
